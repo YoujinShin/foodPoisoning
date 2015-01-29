@@ -1,0 +1,9 @@
+ Meteor.startup(function () {
+	 
+
+	
+
+});
+
+
+

@@ -1,0 +1,29 @@
+<template name="map">
+
+	<div id="map{{_id}}" class="map floatleft">
+		<div id="delete{{_id}}" class="delete cursor">
+			Delete map
+		</div>
+		<div id="legend{{_id}}" class="legend">
+			{{#each selection}}
+				<div id="label{{_id}}" class="floatleft" style="padding-right:10px">
+					{{properties.NAME_2}}
+				</div>
+			{{/each}}
+		</div>
+	</div>
+	
+	<div id="indicators{{_id}}" class="indicators floatleft">
+		
+		{{#with indicators}}
+			{{#if isNull this}}
+				Make a selection to load indicators...
+			{{else}}
+				Indicator 1: {{roundValue indicator1}}<br/>
+				Indicator 2: {{roundValue indicator2}}<br/>
+				Indicator 3: {{roundValue indicator3}}<br/>
+			{{/if}}
+		{{/with}}
+	</div>
+	
+</template>
