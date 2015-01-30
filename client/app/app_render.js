@@ -10,11 +10,11 @@ Template.app.rendered = function() {
 	var foodFactor = ["Cross-contamination", "Inadequate heat treatment", "Storage too long",
 					  "Infected food handler", "Poor personal hygiene", "Poor hand-washing facilities"];
 
-	var margin = { top: 30, right: 40, bottom: 30, left: 40 };
+	var margin = { top: 30, right: 25, bottom: 30, left: 25 };
 
 	var width = parseInt(d3.select('#viz').style('width'), 10) - 30,
 		width = width - margin.left - margin.right,
-		height = 700,
+		height = 585,
 		height = height - margin.top - margin.bottom;
 
 	var width2 = parseInt(d3.select('#viz2').style('width'), 10) - 30,
@@ -42,11 +42,15 @@ Template.app.rendered = function() {
     function makeViz(error, data, data2) {
 
 		var bg = g.append('rect')
-					.attr('x', -margin.left)
-					.attr('y', -margin.top)
-					.attr('width', width + margin.left + margin.right)
-					.attr('height', height + margin.top + margin.bottom)
-					.style('fill', '#D4CEC1')
+					// .attr('x', -margin.left)
+					// .attr('y', -margin.top)
+					.attr('x', -width/24)
+					.attr('y', -5)
+					.attr('width', width+width/12)
+					.attr('height', 340+10)
+					// .style('fill', '#D4CEC1')
+					// .style('fill', '#fff')
+					.style('fill', '#000')
 					.style('opacity', 0);
 
 		var bg2 = g2.append('rect')
@@ -56,6 +60,29 @@ Template.app.rendered = function() {
 					.attr('height', height + margin.top + margin.bottom)
 					.style('fill', '#D4CEC1')
 					.style('opacity', 0);
+
+		// var line = g.append('line')
+		// 			.attr('x1', -width/24)
+		// 			.attr('x2', -width/24)
+		// 			// .attr('y1', 0)
+		// 			.attr('y2', 340+15)
+		// 			// .attr('y2', height+10)
+		// 			.attr('y1', -5)
+		// 			// .attr('y2', height+ margin.top)
+		// 			.attr("stroke-width", 0.8)
+		// 			.attr("stroke", "#556E6F");
+		// 			// .attr("stroke", 'black');
+		// 			// .attr("stroke", 'grey');
+
+		// var line2 = g2.append('line')
+		// 			.attr('x1', -width2/10)
+		// 			.attr('y1', -5)
+		// 			.attr('x2', -width2/10)
+		// 			// .attr('y2', 340)
+		// 			.attr('y2', 340+15)
+		// 			.attr("stroke-width",0.8)
+		// 			.attr("stroke", "#AF5A53");
+		// 			// .attr('stroke', 'grey');
 
 		// data.forEach(function(d) {
 		// 	console.log(d);
@@ -69,9 +96,9 @@ Template.app.rendered = function() {
 						.data(data)
 					.enter().append('rect')
 						.attr('width', width/12)
-						.attr('height', 6)
+						.attr('height', 20)
 						.attr('x', function(d) { return getX(d.Type)-width/24; })
-						.attr('y', function(d) { return getY(d.Cuisine)-3; })
+						.attr('y', function(d) { return getY(d.Cuisine)-5; })
 						// .style('fill', '#5FB466') // green
 						// .style('fill', '#AD4644') // red
 						.style('fill', '#556E6F') // dark blue
@@ -81,9 +108,9 @@ Template.app.rendered = function() {
 						.data(data2)
 					.enter().append('rect')
 						.attr('width', width2/5)
-						.attr('height', 6)
+						.attr('height', 20)
 						.attr('x', function(d) { return getX2(d.Factor)-width2/10; })
-						.attr('y', function(d) { return getY(d.Cuisine)-3; })
+						.attr('y', function(d) { return getY(d.Cuisine)-5; })
 						// .style('fill', '#5FB466')
 						.style('fill', '#AF5A53')
 						.style('opacity', function(d) { return getColor2(d.Value); });
@@ -93,12 +120,13 @@ Template.app.rendered = function() {
 					.enter().append('text')
 						.style("text-anchor", "end")
 						.attr("transform", "rotate(-90)")
-						.attr("x", -380)
+						.attr("x", -385)
 						.attr("y", function(d) { return getX(d)-width/24+10; })
 						// .attr("x", function(d) { return getX(d)-width/24; })
 						// .attr("y", 0)
 						.attr("font-family", 'FontAwesome')
-						.style('fill', '#556E6F')
+						.style('fill', '#556E6F') // dark blue
+						// .style('fill', '#5FB466') // green
 						.text(function(d){ return d; });
 
 		var text2 = g2.selectAll('text')
@@ -106,7 +134,7 @@ Template.app.rendered = function() {
 					.enter().append('text')
 						.style("text-anchor", "end")
 						.attr("transform", "rotate(-90)")
-						.attr("x", -380)
+						.attr("x", -385)
 						.attr("y", function(d) { return getX2(d)-width/24+10; })
 						.attr("font-family", 'FontAwesome')
 						.style('fill', '#AF5A53')
