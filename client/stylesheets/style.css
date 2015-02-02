@@ -7,6 +7,25 @@ body{
 	font-family: 'FontAwesome', sans-serif;
 }
 
+#tooltip {   
+	letter-spacing: 1px;
+	position: absolute; 
+	font-family: 'FontAwesome', sans-serif;
+	/*position: relative;*/
+	text-align: center;
+	padding: 8px;       
+	font-size: 11px;
+	border: 0px;
+	border-radius: 2px;
+	pointer-events: none;
+	color: #fff;
+	background-color: #AF5A53;
+	/*color: #000;*/
+	/*background-color: rgba(0,0,0,0.7);*/
+	visibility: hidden;
+	/*font-family: Georgia, Arial, Helvetica, sans-serif !important;*/
+}
+
 img, div, a {
     -khtml-user-select: none;
     -o-user-select: none;
@@ -17,11 +36,11 @@ img, div, a {
 
 h1 {
 	font-family: 'FontAwesome', sans-serif;
-	font-size: 1.6em;
+	font-size: 1.5em;
 	color: #639095;
 	text-align: right;
 	letter-spacing: 5px;
-	margin-right: 9%;
+	margin-right: 7%;
 }
 
 .des {
@@ -32,8 +51,8 @@ h1 {
 }
 
 .foot {
-	margin-left: 9.1% !important;
-	margin-right: 9.1% !important;
+	margin-left: 7.1% !important;
+	margin-right: 7.1% !important;
 	font-family: 'FontAwesome', sans-serif;
 	font-size: 11px !important;
 	color: #639095;
@@ -44,24 +63,24 @@ h1 {
 }
 h3 {
 	font-family: 'FontAwesome', sans-serif;
-	font-size: 0.7em;
+	font-size: 11px;
 	color: #639095;
 	text-align: right;
-	margin-right: 9.1% !important;
-	margin-top:14px;
+	margin-right: 7.4% !important;
+	margin-top:16px;
 }
 
 hr {
 	width: 200px;
 	border-width: 2px;
 	border-color: #639095 !important;
-	margin-right: 9.4% !important;
-	/*margin-left: 9.1% !important;*/
+	margin-right: 7.5% !important;
+	/*margin-left: 7.1% !important;*/
 }
 
 p {
 	/*color: #888;*/
-	color: #639095;
+	color: #556E6F;
 	font-size: 11px;
 	text-align: right;
 	font-family: 'FontAwesome', sans-serif;

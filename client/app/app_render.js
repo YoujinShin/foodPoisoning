@@ -1,24 +1,32 @@
 Template.app.rendered = function() {
 	console.log("# render viz");
 
+	var tooltip = d3.select("body")
+		.append("div")
+		.attr("id", "tooltip");
+
 	var foodType = ["Red meat", "Poultry meat", "Finfish", "Crustacean and shellfish", 
 					"Eggs and egg dishes","Raw egg shell used in uncooked",
 					"Milk and dairy products","Rice","Vegetables and fruit",
 					"Desserts, cakes and confectionary","Condiments and snacks",
 					"Mixed foods","Other foods"];
 
+	var foodImage = ["condiment.png", "crustacean.png", "dessert.png", "eggdish.png", 
+					"eggshell.png", "etc.png", "finfish.png", "milk.png", "mixfood.png", 
+					"poultry.png", "redmeat.png", "rice.png", "veg.png"];
+
 	var foodFactor = ["Cross-contamination", "Inadequate heat treatment", "Storage too long",
 					  "Infected food handler", "Poor personal hygiene", "Poor hand-washing facilities"];
 
-	var margin = { top: 30, right: 25, bottom: 30, left: 25 };
+	var margin = { top: 30, right: 50, bottom: 30, left: 50 };
 
-	var width = parseInt(d3.select('#viz').style('width'), 10) - 30,
+	var width = parseInt(d3.select('#viz').style('width'), 10)-0,
 		width = width - margin.left - margin.right,
-		height = 585,
+		height = 560,
 		height = height - margin.top - margin.bottom;
 
-	var width2 = parseInt(d3.select('#viz2').style('width'), 10) - 30,
-		width2 = width2 - margin.left - margin.right;
+	// var width2 = parseInt(d3.select('#viz2').style('width'), 10) - 30,
+	// 	width2 = width2 - margin.left - margin.right;
 
 	var svg = d3.select('#viz').append('svg')
 			.attr("width", width + margin.left + margin.right)
@@ -27,62 +35,53 @@ Template.app.rendered = function() {
 	var g =	svg.append('g')
 			.attr('transform', 'translate('+margin.left+","+margin.top+')');
 
-	var svg2 = d3.select('#viz2').append('svg')
-			.attr("width", width2 + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom);
+	// var svg2 = d3.select('#viz2').append('svg')
+	// 		.attr("width", width2 + margin.left + margin.right)
+	// 		.attr("height", height + margin.top + margin.bottom);
 
-	var g2 = svg2.append('g')
-			.attr('transform', 'translate('+margin.left+","+margin.top+')');
+	// var g2 = svg2.append('g')
+	// 		.attr('transform', 'translate('+margin.left+","+margin.top+')');
 
 	queue()
 		.defer(d3.csv, 'foodType.csv')
-		.defer(d3.csv, 'foodFactor.csv')
+		// .defer(d3.csv, 'foodFactor.csv')
 		.await(makeViz);
 
     function makeViz(error, data, data2) {
 
-		var bg = g.append('rect')
-					// .attr('x', -margin.left)
-					// .attr('y', -margin.top)
-					.attr('x', -width/24)
-					.attr('y', -5)
-					.attr('width', width+width/12)
-					.attr('height', 340+10)
+		// var bg = g.append('rect')
+		// 			.attr('x', -margin.left)
+		// 			.attr('y', -margin.top)
+		// 			// .attr('x', -width/24)
+		// 			// .attr('y', -5)
+		// 			.attr('width', width + margin.left + margin.right)
+		// 			.attr('height', 420+10)
+		// 			// .style('fill', '#D4CEC1')
+		// 			// .style('fill', '#fff')
+		// 			.style('fill', '#000')
+		// 			.style('opacity', 0);
+
+		var bg = //g.selectAll('.rect')
+					g.append('rect')
+					.attr('x', -margin.left)
+					.attr('y', 401)
+					// .attr('x', -width/24)
+					// .attr('y', -5)
+					.attr('width', width/12-2)
+					.attr('height', width/12*1.32)
 					// .style('fill', '#D4CEC1')
 					// .style('fill', '#fff')
-					.style('fill', '#000')
-					.style('opacity', 0);
+					.style('fill', '#AF5A53')
+					.style("visibility", "hidden")
+					.style('opacity', 1);
 
-		var bg2 = g2.append('rect')
-					.attr('x', -margin.left)
-					.attr('y', -margin.top)
-					.attr('width', width2 + margin.left + margin.right)
-					.attr('height', height + margin.top + margin.bottom)
-					.style('fill', '#D4CEC1')
-					.style('opacity', 0);
-
-		// var line = g.append('line')
-		// 			.attr('x1', -width/24)
-		// 			.attr('x2', -width/24)
-		// 			// .attr('y1', 0)
-		// 			.attr('y2', 340+15)
-		// 			// .attr('y2', height+10)
-		// 			.attr('y1', -5)
-		// 			// .attr('y2', height+ margin.top)
-		// 			.attr("stroke-width", 0.8)
-		// 			.attr("stroke", "#556E6F");
-		// 			// .attr("stroke", 'black');
-		// 			// .attr("stroke", 'grey');
-
-		// var line2 = g2.append('line')
-		// 			.attr('x1', -width2/10)
-		// 			.attr('y1', -5)
-		// 			.attr('x2', -width2/10)
-		// 			// .attr('y2', 340)
-		// 			.attr('y2', 340+15)
-		// 			.attr("stroke-width",0.8)
-		// 			.attr("stroke", "#AF5A53");
-		// 			// .attr('stroke', 'grey');
+		// var bg2 = g2.append('rect')
+		// 			.attr('x', -margin.left)
+		// 			.attr('y', -margin.top)
+		// 			.attr('width', width2 + margin.left + margin.right)
+		// 			.attr('height', height + margin.top + margin.bottom)
+		// 			.style('fill', '#D4CEC1')
+		// 			.style('opacity', 0);
 
 		// data.forEach(function(d) {
 		// 	console.log(d);
@@ -96,68 +95,114 @@ Template.app.rendered = function() {
 						.data(data)
 					.enter().append('rect')
 						.attr('width', width/12)
-						.attr('height', 20)
+						.attr('height', 24) //20
 						.attr('x', function(d) { return getX(d.Type)-width/24; })
 						.attr('y', function(d) { return getY(d.Cuisine)-5; })
 						// .style('fill', '#5FB466') // green
 						// .style('fill', '#AD4644') // red
 						.style('fill', '#556E6F') // dark blue
-						.style('opacity', function(d) { return getColor(d.Value); });
+						.style('fill-opacity', function(d) { return getColor(d.Value); })
+					.on("mouseover", function(d) {
+						d3.select(this).attr("stroke-width",3);
+						d3.select(this).attr("stroke", "#AF5A53");
 
-		var dots2 = g2.selectAll('.dot')
-						.data(data2)
-					.enter().append('rect')
-						.attr('width', width2/5)
-						.attr('height', 20)
-						.attr('x', function(d) { return getX2(d.Factor)-width2/10; })
-						.attr('y', function(d) { return getY(d.Cuisine)-5; })
-						// .style('fill', '#5FB466')
-						.style('fill', '#AF5A53')
-						.style('opacity', function(d) { return getColor2(d.Value); });
+						tooltip.text(d.Cuisine+" cuisine with "+ d.Type);
+						tooltip.style("visibility", "visible");
 
-		var text = g.selectAll('text')
-						.data(foodType)
-					.enter().append('text')
-						.style("text-anchor", "end")
-						.attr("transform", "rotate(-90)")
-						.attr("x", -385)
-						.attr("y", function(d) { return getX(d)-width/24+10; })
-						// .attr("x", function(d) { return getX(d)-width/24; })
-						// .attr("y", 0)
-						.attr("font-family", 'FontAwesome')
-						.style('fill', '#556E6F') // dark blue
-						// .style('fill', '#5FB466') // green
-						.text(function(d){ return d; });
+						selectCuisine(d.Cuisine);
 
-		var text2 = g2.selectAll('text')
-						.data(foodFactor)
-					.enter().append('text')
-						.style("text-anchor", "end")
-						.attr("transform", "rotate(-90)")
-						.attr("x", -385)
-						.attr("y", function(d) { return getX2(d)-width/24+10; })
-						.attr("font-family", 'FontAwesome')
-						.style('fill', '#AF5A53')
-						.text(function(d){ return d; });
-
-
-		// var dots = g.selectAll('.dot')
-		// 				.data(data)
-		// 			.enter().append('circle')
-		// 				.attr('r', 10)
-		// 				.attr('cx', function(d) { return getX(d.Type); })
-		// 				.attr('cy', function(d) { return getY(d.Cuisine); })
-		// 				.style('fill', '#5FB466')
-		// 				.style('opacity', function(d) { return getColor(d.Value); });
+						bg.style("visibility", "visible");
+						bg.attr("x", getX(d.Type)-width/24+1);
+						// console.log(bg.attr("y"));
+						// d3.select(bg).attr("x", 100);
+						// console.log(d3.select(bg).attr("x"));
+						
+						// d3.select(bg).attr('x', function(d) { return getX(d.Type)-width/24; });
+						// d3.select(this).transition().duration(300)
+						// 	.attr("height", 30);
+					})
+					.on("mousemove", function(){
+						// tooltip.style("top",0+"px").style("left",0+"px");
+						tooltip.style("top", (event.pageY-35)+"px").style("left",(event.pageX+10)+"px");
+					})
+					.on("mouseout", function(d) {
+						bg.style("visibility", "hidden");
+						// d3.select(this).transition().duration(300)
+						// 	.attr("height", 20);
+						unselectCuisine(d.Cuisine);
+						d3.select(this).attr("stroke-width", 0);
+						tooltip.style("visibility", "hidden");
+					});
 
 		// var dots2 = g2.selectAll('.dot')
 		// 				.data(data2)
-		// 			.enter().append('circle')
-		// 				.attr('r', 10)
-		// 				.attr('cx', function(d) { return getX2(d.Factor); })
-		// 				.attr('cy', function(d) { return getY(d.Cuisine); })
-		// 				.style('fill', '#5FB466')
-		// 				.style('opacity', function(d) { return getColor2(d.Value); });
+		// 			.enter().append('rect')
+		// 				.attr('width', width2/5)
+		// 				.attr('height', 20)
+		// 				.attr('x', function(d) { return getX2(d.Factor)-width2/10; })
+		// 				.attr('y', function(d) { return getY(d.Cuisine)-5; })
+		// 				// .style('fill', '#5FB466')
+		// 				.style('fill', '#AF5A53')
+		// 				.style('fill-opacity', function(d) { return getColor2(d.Value); })
+		// 			.on("mouseover", function(d) {
+		// 				d3.select(this).attr("stroke-width",2);
+		// 				d3.select(this).attr("stroke", "#000");
+
+		// 				tooltip.text(d.Cuisine+" cuisine with "+ d.Factor);
+		// 				tooltip.style("visibility", "visible");
+		// 			})
+		// 			.on("mousemove", function(){
+		// 				// tooltip.style("top",0+"px").style("left",0+"px");
+		// 				tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+12)+"px");
+		// 			})
+		// 			.on("mouseout", function(d) {
+		// 				// d3.select(this).transition().duration(300)
+		// 				// 	.attr("height", 20);
+		// 				d3.select(this).attr("stroke-width", 0);
+		// 				tooltip.style("visibility", "hidden");
+		// 			});
+
+		// var text = g.selectAll('text')
+		// 				.data(foodType)
+		// 			.enter().append('text')
+		// 				.style("text-anchor", "end")
+		// 				.attr("transform", "rotate(-90)")
+		// 				.attr("x", -385)
+		// 				.attr("y", function(d) { return getX(d)-width/24+10; })
+		// 				// .attr("x", function(d) { return getX(d)-width/24; })
+		// 				// .attr("y", 0)
+		// 				.attr("font-family", 'FontAwesome')
+		// 				.style('fill', '#556E6F') // dark blue
+		// 				// .style('fill', '#5FB466') // green
+		// 				.text(function(d){ return d; });
+
+		var images = g.selectAll('image')
+						.data(foodImage)
+					.enter().append('image')
+						// .attr("xlink:href", function(d) { return d.icon; })
+						.attr("xlink:href",function(d) { return d; })
+						.attr('x', function(d) { return getX3(d)-width/24; }) //
+						.attr('y', 400)
+						.attr("width", width/12-1)
+						.attr("height", width/12*1.32);
+
+		// var img_red = g.append("image")
+		// 		.attr("xlink:href","redmeat.png")
+  //               .attr("cx",10)
+  //               .attr("cy", 60)
+  //               .attr("width", 100)
+  //               .attr("height", 100);
+
+		// var text2 = g2.selectAll('text')
+		// 				.data(foodFactor)
+		// 			.enter().append('text')
+		// 				.style("text-anchor", "end")
+		// 				.attr("transform", "rotate(-90)")
+		// 				.attr("x", -385)
+		// 				.attr("y", function(d) { return getX2(d)-width/24+10; })
+		// 				.attr("font-family", 'FontAwesome')
+		// 				.style('fill', '#AF5A53')
+		// 				.text(function(d){ return d; });
 	}
 
 	function getX(d) {
@@ -176,6 +221,28 @@ Template.app.rendered = function() {
 		else if(d=='Condiments and snacks') { return t*10; }
 		else if(d=='Mixed foods') { return t*11; }
 		else if(d='Other foods') { return t*12; }		
+	}
+
+	function getX3(d) {
+		var t = width/12;
+		
+		// "condiment.png", "crustacean.png", "dessert.png", "eggdish.png", 
+		// 			"eggshell.png", "etc.png", "finfish.png", "milk.png", "mixfood.png", 
+		// 			"poultry.png", "redmeat.png", "rice.png", "veg.png"
+		if(d=="redmeat.png") { return t*0; }
+		else if(d=="poultry.png") { return t*1; }
+		else if(d=="finfish.png") { return t*2; }
+		else if(d=="crustacean.png") { return t*3; }
+		else if(d=="eggdish.png") { return t*4; }
+		else if(d=="eggshell.png") { return t*5; }
+		else if(d=="milk.png") { return t*6; }
+		else if(d=="rice.png") { return t*7; }
+		else if(d=="veg.png") { return t*8; }
+		else if(d=="dessert.png") { return t*9; }
+		else if(d=="condiment.png") { return t*10; }
+		else if(d=="mixfood.png") { return t*11; }
+		else if(d=="etc.png") { return t*12; }		
+		else { console.log(d);}
 	}
 
 	function getX2(d) {
@@ -201,7 +268,7 @@ Template.app.rendered = function() {
 		else if(d=='Italian') { return t*5; }
 		else if(d=='Sandwich bar') { return t*6; }
 		else if(d=='Seafood') { return t*7; }
-		else if(d=='Other cuisines') { return t*8; }
+		else if(d=='Other') { return t*8; }
 	}
 
 	function getColor(d) {
@@ -210,6 +277,30 @@ Template.app.rendered = function() {
 
 	function getColor2(d) {
 		return d/80;
+	}
+
+	function selectCuisine(d) {
+		if(d=='American') { $("#american").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
+		else if(d=='British') { $("#british").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
+		else if(d=='Chinese') { $("#chinese").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+		else if(d=='Continental/ European') { $("#continental").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
+		else if(d=='Indian') { $("#indian").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+		else if(d=='Italian') { $("#italian").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+		else if(d=='Sandwich bar') { $("#sandwich").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+		else if(d=='Seafood') { $("#seafood").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+		else if(d=='Other') { $("#other").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+	}
+
+	function unselectCuisine(d) {
+		if(d=='American') { $("#american").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
+		else if(d=='British') { $("#british").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
+		else if(d=='Chinese') { $("#chinese").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+		else if(d=='Continental/ European') { $("#continental").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
+		else if(d=='Indian') { $("#indian").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+		else if(d=='Italian') { $("#italian").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+		else if(d=='Sandwich bar') { $("#sandwich").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+		else if(d=='Seafood') { $("#seafood").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+		else if(d=='Other') { $("#other").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
 	}
 
 }
