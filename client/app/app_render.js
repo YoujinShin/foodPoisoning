@@ -18,11 +18,19 @@ Template.app.rendered = function() {
 	var foodFactor = ["Cross-contamination", "Inadequate heat treatment", "Storage too long",
 					  "Infected food handler", "Poor personal hygiene", "Poor hand-washing facilities"];
 
-	var margin = { top: 30, right: 50, bottom: 30, left: 50 };
+	var margin = { top: 30, right: 120, bottom: 30, left: 70 };
 
-	var width = parseInt(d3.select('#viz').style('width'), 10)-0,
-		width = width - margin.left - margin.right,
-		height = 560,
+	// var width = parseInt(d3.select('#viz').style('width'), 10)-0,
+	// 	width = width - margin.left - margin.right,
+	// 	height = 540,
+	// 	height = height - margin.top - margin.bottom;
+
+	var width = parseInt(d3.select('#viz').style('width'), 10)-0;
+	if(width < 700) { width = 700; }
+
+		width = width - margin.left - margin.right;
+
+	var height = 520,
 		height = height - margin.top - margin.bottom;
 
 	// var width2 = parseInt(d3.select('#viz2').style('width'), 10) - 30,
@@ -95,7 +103,7 @@ Template.app.rendered = function() {
 						.data(data)
 					.enter().append('rect')
 						.attr('width', width/12)
-						.attr('height', 24) //20
+						.attr('height', 25) //20
 						.attr('x', function(d) { return getX(d.Type)-width/24; })
 						.attr('y', function(d) { return getY(d.Cuisine)-5; })
 						// .style('fill', '#5FB466') // green
@@ -106,7 +114,8 @@ Template.app.rendered = function() {
 						d3.select(this).attr("stroke-width",3);
 						d3.select(this).attr("stroke", "#AF5A53");
 
-						tooltip.text(d.Cuisine+" cuisine with "+ d.Type);
+						// tooltip.text(d.Cuisine+" cuisine with "+ d.Type);
+						tooltip.text(d.Type);
 						tooltip.style("visibility", "visible");
 
 						selectCuisine(d.Cuisine);
@@ -138,11 +147,12 @@ Template.app.rendered = function() {
 		// 				.data(data2)
 		// 			.enter().append('rect')
 		// 				.attr('width', width2/5)
-		// 				.attr('height', 20)
+		// 				.attr('height', 25)
 		// 				.attr('x', function(d) { return getX2(d.Factor)-width2/10; })
 		// 				.attr('y', function(d) { return getY(d.Cuisine)-5; })
 		// 				// .style('fill', '#5FB466')
-		// 				.style('fill', '#AF5A53')
+		// 				.style('fill', '#556E6F') // dark blue
+		// 				// .style('fill', '#AF5A53')
 		// 				.style('fill-opacity', function(d) { return getColor2(d.Value); })
 		// 			.on("mouseover", function(d) {
 		// 				d3.select(this).attr("stroke-width",2);
@@ -192,6 +202,17 @@ Template.app.rendered = function() {
   //               .attr("cy", 60)
   //               .attr("width", 100)
   //               .attr("height", 100);
+
+  		// var text2 = g2.selectAll('text')
+				// 		.data(foodFactor)
+				// 	.enter().append('text')
+				// 		.style("text-anchor", "end")
+				// 		// .attr("transform", "rotate(-90)")
+				// 		.attr("x", function(d) { return getX2(d)-width/24+10; })
+				// 		.attr("y", 400)
+				// 		.attr("font-family", 'FontAwesome')
+				// 		.style('fill', '#AF5A53')
+				// 		.text(function(d){ return d; });
 
 		// var text2 = g2.selectAll('text')
 		// 				.data(foodFactor)
@@ -258,7 +279,7 @@ Template.app.rendered = function() {
 
 	function getY(d) {
 		// var t = height/8;
-		var t = 42.5;
+		var t = 42.5; // 42.5
 
 		if(d=='American') { return t*0; }
 		else if(d=='British') { return t*1; }
@@ -280,27 +301,62 @@ Template.app.rendered = function() {
 	}
 
 	function selectCuisine(d) {
-		if(d=='American') { $("#american").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
-		else if(d=='British') { $("#british").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
-		else if(d=='Chinese') { $("#chinese").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
-		else if(d=='Continental/ European') { $("#continental").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
-		else if(d=='Indian') { $("#indian").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
-		else if(d=='Italian') { $("#italian").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
-		else if(d=='Sandwich bar') { $("#sandwich").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
-		else if(d=='Seafood') { $("#seafood").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
-		else if(d=='Other') { $("#other").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+		if(d=='American') { $("#american").css({ 'background-color': '#AF5A53', 'color':'white' }); }
+		else if(d=='British') { $("#british").css({ 'background-color': '#AF5A53', 'color':'white' }); }
+		else if(d=='Chinese') { $("#chinese").css({ 'background-color': '#AF5A53', 'color':'white'});  }
+		else if(d=='Continental/ European') { $("#continental").css({ 'background-color': '#AF5A53', 'color':'white' }); }
+		else if(d=='Indian') { $("#indian").css({ 'background-color': '#AF5A53', 'color':'white'});  }
+		else if(d=='Italian') { $("#italian").css({ 'background-color': '#AF5A53', 'color':'white' });  }
+		else if(d=='Sandwich bar') { $("#sandwich").css({ 'background-color': '#AF5A53', 'color':'white' });  }
+		else if(d=='Seafood') { $("#seafood").css({ 'background-color': '#AF5A53' , 'color':'white'});  }
+		else if(d=='Other') { $("#other").css({ 'background-color': '#AF5A53', 'color':'white' });  }
 	}
 
 	function unselectCuisine(d) {
-		if(d=='American') { $("#american").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
-		else if(d=='British') { $("#british").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
-		else if(d=='Chinese') { $("#chinese").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
-		else if(d=='Continental/ European') { $("#continental").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
-		else if(d=='Indian') { $("#indian").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
-		else if(d=='Italian') { $("#italian").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
-		else if(d=='Sandwich bar') { $("#sandwich").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
-		else if(d=='Seafood') { $("#seafood").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
-		else if(d=='Other') { $("#other").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+		if(d=='American') { $("#american").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' }); }
+		else if(d=='British') { $("#british").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' }); }
+		else if(d=='Chinese') { $("#chinese").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' });  }
+		else if(d=='Continental/ European') { $("#continental").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' }); }
+		else if(d=='Indian') { $("#indian").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' });  }
+		else if(d=='Italian') { $("#italian").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' });  }
+		else if(d=='Sandwich bar') { $("#sandwich").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' });  }
+		else if(d=='Seafood') { $("#seafood").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' });  }
+		else if(d=='Other') { $("#other").css({ 'background-color': 'rgba(85,110,111,0.1)', 'color':'#556E6F' });  }
 	}
+
+	// $( function() {
+	//   	$("#american").mouseover(function(){
+	// 	    $("#american").css("background-color", "#AF5A53");
+	// 	    $("#american").css('color','#fff');
+	// 	});
+	// 	$("#american").mouseout(function(){
+	// 	    $("#american").css("background-color", "rgba(85,110,111,0.1)");
+	// 	    $("#american").css('color','#556E6F');
+	// 	});
+	// });
+
+	// function selectCuisine(d) {
+	// 	if(d=='American') { $("#american").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
+	// 	else if(d=='British') { $("#british").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
+	// 	else if(d=='Chinese') { $("#chinese").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+	// 	else if(d=='Continental/ European') { $("#continental").css({ 'color': '#AF5A53', 'font-weight': 'bold' }); }
+	// 	else if(d=='Indian') { $("#indian").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+	// 	else if(d=='Italian') { $("#italian").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+	// 	else if(d=='Sandwich bar') { $("#sandwich").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+	// 	else if(d=='Seafood') { $("#seafood").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+	// 	else if(d=='Other') { $("#other").css({ 'color': '#AF5A53', 'font-weight': 'bold' });  }
+	// }
+
+	// function unselectCuisine(d) {
+	// 	if(d=='American') { $("#american").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
+	// 	else if(d=='British') { $("#british").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
+	// 	else if(d=='Chinese') { $("#chinese").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+	// 	else if(d=='Continental/ European') { $("#continental").css({ 'color': '#556E6F', 'font-weight': 'normal' }); }
+	// 	else if(d=='Indian') { $("#indian").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+	// 	else if(d=='Italian') { $("#italian").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+	// 	else if(d=='Sandwich bar') { $("#sandwich").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+	// 	else if(d=='Seafood') { $("#seafood").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+	// 	else if(d=='Other') { $("#other").css({ 'color': '#556E6F', 'font-weight': 'normal' });  }
+	// }
 
 }
